@@ -655,7 +655,6 @@ button:disabled {
 
 .radar-grid .cell.scout-zone {
   z-index: 24;
-  background: rgba(51, 255, 102, 0.15);
 }
 
 .radar-grid .cell.disabled {
@@ -769,9 +768,8 @@ button:disabled {
   width: 100%;
 }
 
-.radar-grid .cell.scout-zone {
-  background: rgba(51, 255, 102, 0.2);
-  box-shadow: inset 0 0 8px rgba(51, 255, 102, 0.35);
+.radar-grid .cell.scout-zone-contact {
+  box-shadow: inset 0 0 0 999px rgba(255, 60, 60, 0.2);
 }
 
 .radar-grid .cell.ability-preview {

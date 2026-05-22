@@ -319,7 +319,7 @@ class BattleshipGame {
       this.setStatus(
         isStrafe
           ? `Strafe Run: strike row ${row + 1} or column ${col + 1}?`
-          : `Broadside: fire 3 cells on row ${row + 1} or column ${col + 1}?`
+          : `Broadside: fire 5 cells on row ${row + 1} or column ${col + 1}?`
       );
       return;
     }
@@ -444,7 +444,7 @@ class BattleshipGame {
     const contact = scoutHasShip(this.enemyBoard, cells);
 
     this.usedAbilities.add("destroyer");
-    this.scoutZones.push({ row, col });
+    this.scoutZones.push({ row, col, contact });
     this.disarmAbility(false);
 
     this.renderEnemyBoard();
@@ -626,11 +626,14 @@ class BattleshipGame {
     });
   }
 
-  isScoutCell(row, col) {
-    return this.scoutZones.some((zone) => {
+  getScoutCellInfo(row, col) {
+    for (const zone of this.scoutZones) {
       const cells = getScoutCells(zone.row, zone.col);
-      return cells.some((c) => c.row === row && c.col === col);
-    });
+      if (cells.some((c) => c.row === row && c.col === col)) {
+        return { inZone: true, contact: zone.contact };
+      }
+    }
+    return null;
   }
 
   canTargetEnemyCell(row, col) {
@@ -749,8 +752,12 @@ class BattleshipGame {
         if (ship && this.enemyBoard.sunkShipIds.has(ship.id)) {
           cell.classList.add("sunk");
         }
-        if (this.isScoutCell(row, col)) {
+        const scoutInfo = this.getScoutCellInfo(row, col);
+        if (scoutInfo) {
           cell.classList.add("scout-zone");
+          if (scoutInfo.contact) {
+            cell.classList.add("scout-zone-contact");
+          }
         }
 
         if (this.phase === PHASE.BATTLE) {

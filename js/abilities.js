@@ -8,7 +8,7 @@ const ABILITIES = {
   battleship: {
     id: "battleship",
     name: "Broadside",
-    desc: "Fire 3 consecutive cells along a row or column.",
+    desc: "Fire 5 consecutive cells along a row or column.",
     unlockOn: "battleship",
   },
   cruiser: {
@@ -40,11 +40,11 @@ const ABILITY_MODE = {
 
 function getBroadsideCells(row, col, axis) {
   if (axis === "row") {
-    const startCol = Math.max(0, Math.min(col - 1, BOARD_SIZE - 3));
-    return [0, 1, 2].map((i) => ({ row, col: startCol + i }));
+    const startCol = Math.max(0, Math.min(col - 2, BOARD_SIZE - 5));
+    return [0, 1, 2, 3, 4].map((i) => ({ row, col: startCol + i }));
   }
-  const startRow = Math.max(0, Math.min(row - 1, BOARD_SIZE - 3));
-  return [0, 1, 2].map((i) => ({ row: startRow + i, col }));
+  const startRow = Math.max(0, Math.min(row - 2, BOARD_SIZE - 5));
+  return [0, 1, 2, 3, 4].map((i) => ({ row: startRow + i, col }));
 }
 
 function getCellsInLane(row, col, axis) {
