@@ -6,6 +6,12 @@
 
 :root {
   --cell-size: 36px;
+  --board-grid-side: calc(10 * var(--cell-size));
+  --board-inner-pad: 18px;
+  --board-outer-pad: 14px;
+  --board-panel-size: calc(
+    var(--board-grid-side) + 2 * (var(--board-inner-pad) + var(--board-outer-pad))
+  );
   --sea-deep: #0c3d5c;
   --sea-mid: #1a6b8f;
   --sea-light: #2d9cca;
@@ -55,7 +61,7 @@ body.phase-over {
 }
 
 #app {
-  max-width: 1040px;
+  max-width: calc(2 * var(--board-panel-size) + 48px);
   margin: 0 auto;
 }
 
@@ -206,17 +212,19 @@ button:disabled {
 }
 
 .boards-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, var(--board-panel-size));
+  gap: 24px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: start;
   width: 100%;
 }
 
 .board-section {
-  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: var(--board-panel-size);
 }
 
 .board-section h2 {
@@ -225,6 +233,12 @@ button:disabled {
   letter-spacing: 0.08em;
   margin-bottom: 12px;
   text-align: center;
+  min-height: 2.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.25;
+  width: 100%;
 }
 
 .board-section-sea h2 {
@@ -238,8 +252,34 @@ button:disabled {
   text-shadow: 0 0 10px rgba(51, 255, 102, 0.4);
 }
 
+.board-section-radar.enemy-standby .radar-frame {
+  opacity: 0.55;
+  filter: saturate(0.6);
+}
+
+.board-section-radar.enemy-standby .radar-screen::after {
+  content: "Awaiting battle";
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(51, 255, 102, 0.75);
+  background: rgba(4, 18, 8, 0.55);
+  pointer-events: none;
+}
+
 /* —— Open sea (player board) —— */
 .sea-frame {
+  box-sizing: border-box;
+  width: var(--board-panel-size);
+  height: var(--board-panel-size);
+  padding: var(--board-outer-pad);
   border-radius: 16px;
   overflow: hidden;
   box-shadow:
@@ -249,14 +289,19 @@ button:disabled {
 
 .sea-surface {
   position: relative;
-  padding: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: var(--board-inner-pad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(
     180deg,
     rgba(135, 206, 235, 0.35) 0%,
     var(--sea-mid) 25%,
     var(--sea-deep) 100%
   );
-  min-width: calc(10 * var(--cell-size) + 44px);
 }
 
 .sea-horizon {
@@ -296,7 +341,9 @@ button:disabled {
 
 .board-wrap {
   position: relative;
-  display: inline-block;
+  width: var(--board-grid-side);
+  height: var(--board-grid-side);
+  flex-shrink: 0;
 }
 
 .ship-layer {
@@ -435,7 +482,10 @@ button:disabled {
 
 /* —— Radar (enemy board only) —— */
 .radar-frame {
-  padding: 14px;
+  box-sizing: border-box;
+  width: var(--board-panel-size);
+  height: var(--board-panel-size);
+  padding: var(--board-outer-pad);
   background: linear-gradient(145deg, #0a1f12 0%, #0d2818 50%, #061008 100%);
   border: 2px solid rgba(51, 255, 102, 0.35);
   border-radius: 12px;
@@ -447,11 +497,14 @@ button:disabled {
 
 .radar-screen {
   position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
   border-radius: 8px;
   overflow: hidden;
   background: var(--radar-bg);
   box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8);
-  padding: 18px;
+  padding: var(--board-inner-pad);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -459,12 +512,8 @@ button:disabled {
 
 /* Board + sweep share exact 10×10 cell box */
 .board-wrap-radar {
-  --board-side: calc(10 * var(--cell-size));
   position: relative;
   z-index: 2;
-  width: var(--board-side);
-  height: var(--board-side);
-  flex-shrink: 0;
   overflow: hidden;
   background:
     linear-gradient(
@@ -680,7 +729,7 @@ button:disabled {
   border: 1px solid rgba(51, 255, 102, 0.3);
   margin-bottom: 20px;
   width: 100%;
-  max-width: calc(2 * (10 * var(--cell-size) + 80px) + 20px);
+  max-width: calc(2 * var(--board-panel-size) + 24px);
 }
 
 .panel-abilities .panel-label {
@@ -846,16 +895,11 @@ button:disabled {
   }
 
   .boards-row {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr;
+    justify-items: center;
     gap: 28px;
   }
 
-}
-
-@media (max-width: 880px) {
-  .boards-row {
-    flex-wrap: wrap;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

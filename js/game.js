@@ -53,6 +53,7 @@ class BattleshipGame {
     this.buildShipPicker();
     this.setBodyPhase();
     this.renderPlayerBoard();
+    this.renderEnemyBoard();
     this.updateUI();
   }
 
@@ -161,7 +162,7 @@ class BattleshipGame {
     this.ai.reset();
     this.resetAbilityState();
     this.playerTurn = true;
-    this.enemySectionEl.hidden = false;
+    this.enemySectionEl.classList.remove("enemy-standby");
     this.placementPanelEl.hidden = true;
     this.abilitiesPanelEl.hidden = false;
     this.setBodyPhase();
@@ -183,7 +184,7 @@ class BattleshipGame {
     this.playerTurn = true;
     this.aiThinking = false;
     this.resetAbilityState();
-    this.enemySectionEl.hidden = true;
+    this.enemySectionEl.classList.add("enemy-standby");
     this.placementPanelEl.hidden = false;
     this.abilitiesPanelEl.hidden = true;
     this.hideGameOver();
