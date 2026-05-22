@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battleship</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="phase-placement">
+  <div id="app">
+    <header>
+      <h1>Battleship</h1>
+      <p id="status">Place your fleet on the open sea below.</p>
+    </header>
+
+    <div id="placement-controls" class="panel panel-sea">
+      <p class="panel-label">Fleet to place</p>
+      <div id="ship-picker"></div>
+      <div class="btn-row">
+        <button type="button" id="rotate-btn" title="Rotate ship">Rotate (R)</button>
+        <button type="button" id="auto-place-btn">Auto Place</button>
+        <button type="button" id="start-btn" disabled>Start Battle</button>
+      </div>
+    </div>
+
+    <div id="boards">
+      <section class="board-section board-section-sea">
+        <h2>Your Fleet</h2>
+        <div class="sea-frame">
+          <div class="sea-surface">
+            <div class="sea-horizon" aria-hidden="true"></div>
+            <div class="sea-waves" aria-hidden="true"></div>
+            <div class="board-wrap">
+              <div id="player-board" class="grid sea-grid" aria-label="Your fleet"></div>
+              <div id="player-ship-layer" class="ship-layer" aria-hidden="true"></div>
+              <div id="placement-preview-layer" class="ship-layer ship-layer-preview" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="abilities-panel" class="panel panel-abilities" hidden>
+        <p class="panel-label">Special abilities (one use each)</p>
+        <div id="abilities-list" class="abilities-list"></div>
+        <div id="ability-targeting-banner" class="ability-banner" hidden>
+          <span id="ability-banner-text">Ability targeting active</span>
+          <button type="button" id="ability-cancel-btn">Cancel targeting (Esc)</button>
+        </div>
+        <div id="line-axis-picker" class="strafe-picker" hidden>
+          <span id="line-picker-label" class="strafe-picker-label">Choose direction:</span>
+          <button type="button" id="line-row-btn">Along row</button>
+          <button type="button" id="line-col-btn">Along column</button>
+          <button type="button" id="line-cancel-btn">Cancel</button>
+        </div>
+      </div>
+
+      <section class="board-section board-section-radar" id="enemy-section" hidden>
+        <h2>Enemy Waters — Radar</h2>
+        <div class="radar-frame">
+          <div class="radar-screen">
+            <div class="board-wrap board-wrap-radar">
+              <div id="enemy-board" class="grid radar-grid" aria-label="Enemy waters"></div>
+              <div class="radar-grid-lines" aria-hidden="true"></div>
+              <div class="radar-sweep" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="game-over" hidden>
+      <p id="game-over-text"></p>
+      <button type="button" id="play-again-btn">Play Again</button>
+    </div>
+  </div>
+
+  <script src="js/ships.js"></script>
+  <script src="js/ship-art.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/abilities.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
