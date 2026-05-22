@@ -61,7 +61,7 @@ body.phase-over {
 }
 
 #app {
-  max-width: calc(2 * var(--board-panel-size) + 48px);
+  max-width: calc(var(--board-panel-size) + 48px);
   margin: 0 auto;
 }
 
@@ -213,10 +213,9 @@ button:disabled {
 
 .boards-row {
   display: grid;
-  grid-template-columns: repeat(2, var(--board-panel-size));
-  gap: 24px;
-  justify-content: center;
-  align-items: start;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 28px;
   width: 100%;
 }
 
@@ -729,7 +728,7 @@ button:disabled {
   border: 1px solid rgba(51, 255, 102, 0.3);
   margin-bottom: 20px;
   width: 100%;
-  max-width: calc(2 * var(--board-panel-size) + 24px);
+  max-width: var(--board-panel-size);
 }
 
 .panel-abilities .panel-label {
@@ -892,12 +891,6 @@ button:disabled {
 
   .radar-screen {
     padding: 12px;
-  }
-
-  .boards-row {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 28px;
   }
 
 }
